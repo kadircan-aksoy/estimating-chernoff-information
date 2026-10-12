@@ -1,0 +1,14 @@
+# Dependencies for ChernoffInformation.ipynb and chernoff_data.py
+# (includes ../nonparametric.py, which the notebook imports kth_dists from)
+# Python 3.12
+
+numpy>=2.1.3
+scipy>=1.14.1
+torch>=2.5.1
+matplotlib>=3.9.2
+tqdm>=4.66.6
+scikit-learn>=1.5.2   # PCA in the notebook; NearestNeighbors / covariance in nonparametric.py
+snntorch>=0.9.1       # imported at module level by nonparametric.py
+
+# Jupyter kernel to run the notebook
+ipykernel>=6.29.5
