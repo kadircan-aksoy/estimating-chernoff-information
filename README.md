@@ -27,14 +27,14 @@ is a kNN estimate of $q(x_i)/p(x_i)$.
 **Chernoff $s$-divergence** (`c_s_hat`):
 
 $$
-\hat C_s = -\log\!\left( B_{k,s}\,\frac{1}{n}\sum_{i=1}^n r_i^{\,1-s} \right),
+\hat C_s = -\log \left( B_{k,s}\,\frac{1}{n}\sum_{i=1}^n r_i^{\,1-s} \right),
 \qquad
 B_{k,s} = \frac{\Gamma(k)^2}{\Gamma(k-s+1)\,\Gamma(k+s-1)},
 $$
 
 where $B_{k,s}$ corrects the bias of the kNN ratio.
 
-**Derivative estimator** (`c_s_prime_hat`) estimates $D_s = \frac{d}{ds}\log\int p^s q^{1-s} = -\frac{d}{ds}C_s$:
+**Derivative estimator** (`c_s_prime_hat`) estimates $D_s = -\frac{d}{ds}C_s$:
 
 $$
 \hat D_s = \psi(k-s+1) - \psi(k+s-1) - \frac{\sum_{i=1}^n r_i^{\,1-s}\,\log r_i}{\sum_{i=1}^n r_i^{\,1-s}},
@@ -42,14 +42,17 @@ $$
 
 where $\psi$ is the digamma function. The first two terms come from differentiating $\log B_{k,s}$, and the last term is a weighted average of $\log r_i$ with weights $r_i^{1-s}$.
 
-**Bisection** (`nielsen_bisect_direct_derivative`): start from $[a,b] = [0,1]$, evaluate $\hat D_s$ at the midpoint $s$, and keep $[a,s]$ if $\hat D_s > 0$ (because $C_s$ is decreasing there, so $s^* < s$). Otherwise keep $[s,b]$. After the final iteration, return $\hat s^*$ and $\hat C = \hat C_{\hat s^*}$.
+**Bisection** (`nielsen_bisect_direct_derivative`): start from $[a,b] = [0,1]$, evaluate $\hat D_s$ at the midpoint $s$, and apply bisection on the interval using the sign of $\hat D_s$. After the final iteration, return $\hat s^*$ and $\hat C = \hat C_{\hat s^*}$.
+
+
+## Contents
 
 The notebook includes the following experiments: 
 
 1) Synthetic datasets from the paper as sanity checks.
 2) MNIST experiment estimating the Chernoff Info between different digits (requires separate MNIST download).
 3) A dimension scaling experiment to gauge sample complexity.
- 
+
 ## How to run
 
 ```bash
